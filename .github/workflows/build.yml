@@ -12,9 +12,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.opam"
-          key: opam-${{github.base_ref}}-${{github.ref#/refs/heads/}} 
+          key: opam-${{github.base_ref}}-${{github.ref}} 
           restore-keys: |
-            opam--${{github.base_ref}}
+            opam--/refs/heads/${{github.base_ref}}
 
       - name: Install OCaml
         uses: avsm/setup-ocaml@v1
@@ -28,4 +28,4 @@ jobs:
 
       - run: echo "${{ github.base_ref }}"
       - run: echo "${{ github.ref }}"
-      - run: echo "${{ github.ref#/refs/heads }}"
+      - run: echo "${{ github.ref}}"
