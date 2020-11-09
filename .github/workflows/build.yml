@@ -1,0 +1,31 @@
+name: Test compilation
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Try to restore opam cache
+        id: opam-cache
+        uses: actions/cache@v2
+        with:
+          path: "~/.opam"
+          key: opam-${{github.base_ref}}-${{github.ref#/refs/heads/}} 
+          restore-keys: |
+            opam--${{github.base_ref}}
+
+      - name: Install OCaml
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: 4.07.1
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - run: echo "${{ github.base_ref }}"
+      - run: echo "${{ github.ref }}"
+      - run: echo "${{ github.ref#/refs/heads }}"
